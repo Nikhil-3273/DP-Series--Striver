@@ -1,0 +1,33 @@
+//https://www.codingninjas.com/studio/problems/house-robber_839733
+long long int rob(vector<long long int>& nums) {
+    int n = nums.size();
+    long long int prev = nums[0];
+    long long int prev1 = 0;
+    for (int i = 1; i < n; i++) {
+        long long int pick = nums[i];
+        if (i > 1) pick += prev1;
+        long long int notpick = prev;
+        long long int curr = max(pick, notpick);
+        prev1 = prev;
+        prev = curr;
+    }
+    return prev;
+}
+long long int houseRobber(vector<int>& valueInHouse)
+{
+    // Write your code here.
+    int p=valueInHouse.size();
+    if (p == 0) {
+        return 0; // Handle empty input case
+    }
+    if(p==1) return valueInHouse[0];
+    vector<long long int>a,b;
+    for(int i=0; i<p; i++)
+    {
+        if(i!=0) a.push_back(valueInHouse[i]);
+        if(i!=p-1) b.push_back(valueInHouse[i]);
+    }
+    long long int x=rob(a);
+    long long int y=rob(b);
+    return max(x,y);
+}
