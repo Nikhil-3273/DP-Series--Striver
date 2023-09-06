@@ -1,4 +1,4 @@
-//https://www.codingninjas.com/studio/problems/house-robber_839733
+https://www.codingninjas.com/studio/problems/house-robber_839733
 long long int rob(vector<long long int>& nums) {
     int n = nums.size();
     long long int prev = nums[0];
