@@ -1,0 +1,14 @@
+https://leetcode.com/problems/minimum-path-sum/?envType=study-plan-v2&envId=dynamic-programming
+int recur(int i,int j, vector<vector<int>>&grid, vector<vector<int>>&dp)
+{
+    if(i==0 &&j==0) return grid[0][0];
+    if(i<0 || j<0) return INT_MAX;
+    if(dp[i][j]!=-1) return dp[i][j];
+    int l1=grid[i][j]+min(recur(i-1,j,grid,dp),recur(i,j-1,grid,dp));
+    return dp[i][j]=l1;
+}
+int minPathSum(vector<vector<int>>& grid) {
+    int i=grid.size(),j=grid[0].size();
+    vector<vector<int>>dp(i,vector<int>(j,-1));
+    return recur(i-1,j-1,grid,dp);
+}
