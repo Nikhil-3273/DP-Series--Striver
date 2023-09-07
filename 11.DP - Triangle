@@ -1,0 +1,14 @@
+https://leetcode.com/problems/triangle/?envType=study-plan-v2&envId=dynamic-programming
+
+
+int recur(int ind1, int ind2, int i,vector<vector<int>>&triangle,vector<vector<int>>&dp)
+{
+    if(ind1==i-1) return triangle[ind1][ind2];
+    if(dp[ind1][ind2]!=-1) return dp[ind1][ind2];
+    return dp[ind1][ind2]=triangle[ind1][ind2]+min(recur(ind1+1,ind2,i,triangle,dp),recur(ind1+1,ind2+1,i,triangle,dp));
+}
+int minimumTotal(vector<vector<int>>& triangle) {
+    int i=triangle.size();
+    vector<vector<int>>dp(i,vector<int>(i,-1));
+    return recur(0,0,i,triangle,dp);
+}
