@@ -1,0 +1,33 @@
+https://leetcode.com/problems/minimum-falling-path-sum/?envType=study-plan-v2&envId=dynamic-programming
+// int recur(int ind1, int ind2, vector<vector<int>>&matrix, vector<vector<int>>&dp)
+// {
+//     if(ind1==0) return matrix[ind1][ind2];
+//     if(dp[ind1][ind2]!=-1) return dp[ind1][ind2];
+//     // if(ind2<0 || ind2>matrix[0].size()) return INT_MAX;
+//     int o1=(ind2>0)?recur(ind1-1,ind2-1,matrix,dp):INT_MAX;
+//     int o2=recur(ind1-1,ind2,matrix,dp);
+//     int o3=(ind2<matrix[0].size()-1)?recur(ind1-1,ind2+1,matrix,dp):INT_MAX;
+//     return dp[ind1][ind2]=matrix[ind1][ind2]+min(o1,min(o2,o3));
+// }
+int minFallingPathSum(vector<vector<int>>& matrix) {
+    int n=matrix.size();
+    vector<vector<int>>dp(n,vector<int>(n,0));
+    //base case;
+    for(int i=0; i<n; i++) dp[0][i]=matrix[0][i];
+    for(int i=1; i<n; i++)
+    {
+        for(int k=0; k<n; k++)
+        {
+            int o1=(k>0)?dp[i-1][k-1]:INT_MAX;
+            int o2=dp[i-1][k];
+            int o3=(k<matrix[0].size()-1)?dp[i-1][k+1]:INT_MAX;
+            dp[i][k]=matrix[i][k]+min(o1,min(o2,o3));
+        }
+    }
+    int minm=INT_MAX;
+    for(int i=0; i<n; i++)
+    {
+        minm=min(minm,dp[n-1][i]);
+    }
+    return minm;
+}
