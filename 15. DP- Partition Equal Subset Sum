@@ -1,0 +1,38 @@
+https://www.codingninjas.com/studio/problems/partition-equal-subset-sum_892980?topic=dynamic-programming&leftPanelTab=0
+
+
+
+// bool f(int i, int k, vector<int>&arr, vector<vector<bool>> &dp)
+// {
+// 	if(k==0) return true;
+// 	if(i==0) return (k==arr[0]);
+// 	if(dp[i][k]!=-1) return dp[i][k];
+// 	bool notTake= f(i-1, k, arr,dp);
+// 	bool take= false;
+// 	if(k>=arr[i]) take=f(i-1,k-arr[i],arr,dp);
+// 	return dp[i][k]=(take) | (notTake);
+// }
+bool canPartition(vector<int> &arr, int n)
+{
+	// Write your code here.
+	int sum=0;
+	for(auto x: arr) sum+=x;
+	if(sum%2!=0) return false;
+	int k=sum/2;
+	vector<bool>prev(k+1,0),cur(k+1,0);
+    prev[0]=cur[0]=true;
+    prev[arr[0]]=true;
+    for(int ind=1; ind<n;ind++)
+    {
+        for(int tar=1; tar<=k; tar++)
+        {
+             bool notTake =prev[tar];
+            bool take=false;
+            if(tar>=arr[ind]) take=prev[tar-arr[ind]];
+            cur[tar]=(take)|(notTake);
+        }
+        prev=cur;
+    }
+    return prev[k];
+
+}
