@@ -1,0 +1,45 @@
+https://www.codingninjas.com/studio/problems/partition-a-set-into-two-subsets-such-that-the-difference-of-subset-sums-is-minimum_842494?topic=dynamic-programming&leftPanelTab=0
+
+
+
+// bool recur(int ind, int tar, vector<int>&arr,vector<vector<int>> &dp)
+// {
+//     if(tar==0) return true;
+//     if(ind==0) return (arr[0]==tar);
+//     if(dp[ind][tar]!=-1) return dp[ind][tar];
+//     bool notTake =recur(ind-1,tar,arr,dp);
+//     bool take=false;
+//     if(tar>=arr[ind]) take=recur(ind-1,tar-arr[ind],arr,dp);
+//     return dp[ind][tar]=(take)|(notTake);
+// }
+int minSubsetSumDifference(vector<int>& arr, int n)
+{
+	// Write your code here.
+	int sum=0;
+	for(auto x: arr) sum+=x;
+	
+	vector<bool>prev(sum+1,0), curr(sum+1,0);
+	prev[0]=true;
+	if(arr[0]<=sum) prev[arr[0]]=true;
+	for(int ind=1; ind<n; ind++)
+	{
+		for(int tar=0; tar<=sum/2; tar++)
+		{
+			bool nottake=prev[tar];
+			bool take=false;
+			if(tar>=arr[ind]) take= prev[tar-arr[ind]];
+			curr[tar]= (take) | (nottake);
+		}
+		prev=curr;
+	}
+	int minm=1e9;
+	for(int s=0; s<=sum/2; s++)
+	{
+		if(prev[s]==true)
+		{
+			int s1=s, s2=sum-s1;
+			minm=min(minm, abs(s1-s2));
+		}
+	}
+	return minm;
+}
