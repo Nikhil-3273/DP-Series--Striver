@@ -1,0 +1,45 @@
+https://www.codingninjas.com/studio/problems/0-1-knapsack_920542?topic=dynamic-programming&leftPanelTab=0
+
+
+#include <bits/stdc++.h> 
+// int recur(int n,int maxWeight,vector<int>&weight, vector<int>&value,vector<vector<int>>&dp)
+// {
+// 	if(n==0)
+// 	{
+// 		if(maxWeight>=weight[0])return value[0];
+// 		else return 0;
+// 	}
+// 	if(dp[n][maxWeight]!=-1) return dp[n][maxWeight];
+// 	int pick=INT_MIN;
+// 	if(weight[n]<=maxWeight) pick=value[n]+recur(n-1,maxWeight-weight[n],weight,value,dp);
+// 	int notpick=recur(n-1,maxWeight,weight,value,dp);
+// 	return dp[n][maxWeight]=max(pick,notpick);
+// }
+int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight) 
+{
+	// Write your code here
+	// return recur(n-1,maxWeight,weight,value,dp);
+	// vector<vector<int>>dp(n,vector<int>(maxWeight+1,0));
+
+
+
+	//////////////  S P A C E     O P T I M I S A T I O N    I N  A  S I N G L E    R O W  >>>>>>>>>>>
+	vector<int>prev(maxWeight+1,0); //curr(maxWeight+1,0);
+	for(int i=weight[0]; i<=maxWeight; i++) prev[i]=value[0];
+
+
+	
+	for(int ind=1; ind<n; ind++)
+	{
+		for(int w=maxWeight;w >=0; w--)
+		{
+			int notpick=prev[w];
+			int pick=INT_MIN;
+			if(weight[ind]<=w) pick=value[ind]+prev[w-weight[ind]];
+			// curr[w]=max(pick,notpick);
+			prev[w]=max(pick,notpick);
+		}
+		// prev=curr;
+	}
+	return prev[maxWeight];
+}
