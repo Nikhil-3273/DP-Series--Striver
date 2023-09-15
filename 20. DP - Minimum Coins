@@ -1,0 +1,41 @@
+https://www.codingninjas.com/studio/problems/minimum-elements_3843091?topic=dynamic-programming&leftPanelTab=0
+
+// int recur(int ind, int p, int num, vector<vector<int>>&dp)
+// {
+//     if(ind==0)
+//     {
+//         if(p%dem[0]==0) return p/dem[0];
+//         else return 1e9; 
+//     }
+
+//     if(dp[ind][p]!=-1) return dp[ind][p];
+//     int notpick= recur(ind-1,p,dem,dp);
+//     int pick=1e9;
+//     if(p>=dem[ind]) pick= 1+ recur(ind,p-dem[ind],dem,dp);
+//     return dp[ind][p]=min(pick,notpick);
+// }
+
+int minimumElements(vector<int> &num, int x)
+{
+    // Write your code here.
+    vector<int>prev(x+1,0);// curr(x+1,0);
+     for(int i=0; i<=x; i++)
+    {
+        if(i%num[0]==0) prev[i]=i/num[0];
+        else prev[i]=1e9;
+    }
+    for(int ind=1; ind<num.size(); ind++)
+    {
+        for(int t=0; t<=x; t++)
+        {
+            int notpick= prev[t];
+            int pick=INT_MAX;
+            if(num[ind]<=t) pick= 1+ prev[t-num[ind]];
+            prev[t]=min(pick,notpick);
+        }
+        // prev=curr;
+    }
+    int ans=prev[x];
+    if(ans>=1e9) return -1;
+    return ans;
+}
