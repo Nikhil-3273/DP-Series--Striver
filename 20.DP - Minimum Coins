@@ -1,17 +1,17 @@
 https://www.codingninjas.com/studio/problems/minimum-elements_3843091?topic=dynamic-programming&leftPanelTab=0
 
-// int recur(int ind, int p, int num, vector<vector<int>>&dp)
+// int recur(int ind, int p, int num[], vector<vector<int>>&dp)
 // {
 //     if(ind==0)
 //     {
-//         if(p%dem[0]==0) return p/dem[0];
+//         if(p%num[0]==0) return p/num[0];
 //         else return 1e9; 
 //     }
 
 //     if(dp[ind][p]!=-1) return dp[ind][p];
-//     int notpick= recur(ind-1,p,dem,dp);
+//     int notpick= recur(ind-1,p,num,dp);
 //     int pick=1e9;
-//     if(p>=dem[ind]) pick= 1+ recur(ind,p-dem[ind],dem,dp);
+//     if(p>=num[ind]) pick= 1+ recur(ind,p-num[ind],num,dp);
 //     return dp[ind][p]=min(pick,notpick);
 // }
 
