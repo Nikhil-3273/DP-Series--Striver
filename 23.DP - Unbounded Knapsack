@@ -1,0 +1,22 @@
+https://www.codingninjas.com/studio/problems/unbounded-knapsack_1215029?topic=dynamic-programming&leftPanelTab=1
+
+
+#include<bits/stdc++.h>
+int recur(int n,int maxWeight,vector<int>&weight, vector<int>&value,vector<vector<int>>&dp)
+{
+	if(n==0)
+	{
+		if(maxWeight%weight[0]==0)return (maxWeight/weight[0])*value[0];
+		else return 0;
+	}
+	if(dp[n][maxWeight]!=-1) return dp[n][maxWeight];
+	int pick=INT_MIN;
+	if(weight[n]<=maxWeight) pick=value[n]+recur(n,maxWeight-weight[n],weight,value,dp);
+	int notpick=recur(n-1,maxWeight,weight,value,dp);
+	return dp[n][maxWeight]=max(pick,notpick);
+}
+int unboundedKnapsack(int n, int w, vector<int> &profit, vector<int> &weight){
+    // Write Your Code Here.
+    vector<vector<int>>dp(n, vector<int>(w+1,-1));
+    return recur(n-1,w,weight,profit,dp);
+}
