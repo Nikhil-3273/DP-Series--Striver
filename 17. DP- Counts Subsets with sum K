@@ -1,0 +1,24 @@
+https://www.codingninjas.com/studio/problems/number-of-subsets_3952532?topic=dynamic-programming&leftPanelTab=0
+
+
+constexpr int MOD = 1000000007;
+int recur(int ind, int k,vector<int>& arr, vector<vector<int>>&dp)
+{
+	if(k==0)return 1;
+	if(ind==0)
+	{
+		return (arr[ind]==k);
+	}
+	if(dp[ind][k]!=-1)return dp[ind][k];
+	int notpick=recur(ind-1,k,arr,dp);
+	int pick=0;
+	if(arr[ind]<=k) pick=recur(ind-1,k-arr[ind],arr,dp);
+	return dp[ind][k]=(pick+notpick)%MOD;
+}
+int findWays(vector<int>& arr, int k)
+{
+	// Write your code here.
+	int n=arr.size();
+	vector<vector<int>>dp(n,vector<int>(k+1,-1));
+	return recur(n-1,k,arr,dp);
+}
