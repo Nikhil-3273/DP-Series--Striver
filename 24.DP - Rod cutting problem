@@ -1,0 +1,40 @@
+https://www.codingninjas.com/studio/problems/rod-cutting-problem_800284?topic=dynamic-programming&leftPanelTab=1
+
+int recur(int ind, int N, vector<int> &price, vector<vector<int>>&dp)
+{
+	if(ind==0)
+	{
+		// if(len==0)return 0;
+		return price[0]*N;
+		// if(len%1 ==0) return price[0]*len;
+	}
+	if(dp[ind][N]!=-1) return dp[ind][N];
+	int nottake= recur(ind-1,N, price, dp);
+	int take=INT_MIN;
+	int rodlength=ind+1;
+	if(rodlength<=N) take=price[ind]+ recur(ind,N-rodlength,price, dp);
+	return dp[ind][N]=max(take, nottake);
+}
+int cutRod(vector<int> &price, int n)
+{
+	// Write your code here.
+	// int si=price.size();
+	// vector<vector<int>>dp(n,vector<int>(n+1,0));
+	vector<int>prev(n+1,0); //curr(n+1,0);
+	//bsse case...
+	for(int i=1; i<=n; i++) prev[i]=price[0]*i;
+	for(int ind=1; ind<n; ind++)
+	{
+		for(int len=0; len<=n; len++)
+		{
+			int nottake= prev[len];
+			int take=INT_MIN;
+			int rodlength=ind+1;
+			if(rodlength<=len) take=price[ind]+ prev[len-rodlength];//curr[len-rodlength];
+			// curr[len]=max(take, nottake);
+			prev[len]=max(take, nottake);
+		}
+		// prev=curr;
+	}
+	return prev[n];
+}
